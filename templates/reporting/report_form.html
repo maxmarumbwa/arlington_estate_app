@@ -11,4 +11,47 @@
 </form>
 
 <a href="{% url 'report_list' %}">Cancel</a>
+
+<div class="form-group">
+    <label>Select Location on Map</label>
+    <div id="map" style="height: 350px; border-radius:10px;"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        {{ form.latitude }}
+    </div>
+    <div class="col-md-6">
+        {{ form.longitude }}
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    var map = L.map('map').setView([-17.89807940370729, 31.07978049044594], 16);  // Harare default
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker;
+
+    map.on('click', function(e) {
+
+        var lat = e.latlng.lat.toFixed(6);
+        var lng = e.latlng.lng.toFixed(6);
+
+        if (marker) {
+            marker.setLatLng(e.latlng);
+        } else {
+            marker = L.marker(e.latlng).addTo(map);
+        }
+
+        document.getElementById("id_latitude").value = lat;
+        document.getElementById("id_longitude").value = lng;
+    });
+
+});
+</script>
+
 {% endblock %}

@@ -12,3 +12,8 @@ class PropertyReportForm(forms.ModelForm):
             "violation",
             "description",
         ]
+
+        widgets = {
+            "latitude": forms.HiddenInput(),
+            "longitude": forms.HiddenInput(),
+        }
