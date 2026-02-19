@@ -4,9 +4,9 @@
 <div class="container mt-4">
     <h2>All Property Reports</h2>
 
-<a href="{% url 'create_report' %}" class="btn btn-success mb-3">
-    + Create New Report
-</a>
+    <a href="{% url 'create_report' %}" class="btn btn-success mb-3">
+        + Create New Report
+    </a>
 
     <table class="table table-striped table-bordered table-responsive">
         <thead>
@@ -30,12 +30,13 @@
                 <td>${{ report.fine_amount }}</td>
                 <td>{{ report.created_at|date:"Y-m-d" }}</td>
                 <td>
-                    {% if report.images.first %}
-                        <img src="{{ report.images.first.image.url }}" alt="Report Image" width="50" class="img-thumbnail">
+                    {% if report.image %}
+                        <img src="{{ report.image.url }}" alt="Report Image" width="50" class="img-thumbnail">
                     {% else %}
                         No Image
                     {% endif %}
                 </td>
+
             </tr>
             {% endfor %}
         </tbody>

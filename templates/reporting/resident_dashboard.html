@@ -4,6 +4,10 @@
 <div class="container mt-4">
     <h2>Resident Dashboard</h2>
 
+    <a href="{% url 'create_report' %}" class="btn btn-success mb-3">
+        + Create New Report
+    </a>
+    
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="card text-center">
@@ -54,11 +58,16 @@
                 <td>${{ report.fine_amount }}</td>
                 <td>{{ report.created_at|date:"Y-m-d" }}</td>
                 <td>
-                    {% if report.images.first %}
-                        <img src="{{ report.images.first.image.url }}" alt="Report Image" width="50" class="img-thumbnail">
+                <td>
+                    {% if report.image %}
+                        <a href="{{ report.image.url }}" target="_blank">
+                            <img src="{{ report.image.url }}" alt="Report Image" width="50" class="img-thumbnail">
+                        </a>
                     {% else %}
                         No Image
                     {% endif %}
+                </td>
+
                 </td>
             </tr>
             {% endfor %}

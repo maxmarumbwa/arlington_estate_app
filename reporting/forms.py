@@ -9,9 +9,9 @@ class PropertyReportForm(forms.ModelForm):
             "house_number",
             "violation",
             "description",
+            "image",  # 🔥 must match the model field name
             "latitude",
             "longitude",
-            "image",  # include single image
         ]
         widgets = {
             "latitude": forms.HiddenInput(),

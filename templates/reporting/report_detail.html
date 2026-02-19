@@ -11,11 +11,11 @@
     <p><strong>Description:</strong> {{ report.description }}</p>
     <p><strong>Date:</strong> {{ report.created_at|date:"Y-m-d H:i" }}</p>
 
-    {% if report.images.all %}
+    {% if report.image %}
         <h5>Uploaded Image:</h5>
-        {% for img in report.images.all %}
-            <img src="{{ img.image.url }}" alt="Report Image" class="img-fluid mb-2" style="max-width:300px;">
-        {% endfor %}
+        <a href="{{ report.image.url }}" target="_blank">
+            <img src="{{ report.image.url }}" alt="Report Image" class="img-fluid mb-2" style="max-width:300px;">
+        </a>
     {% endif %}
 
     {% if report.latitude and report.longitude %}
