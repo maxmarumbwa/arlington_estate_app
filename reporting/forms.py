@@ -7,12 +7,12 @@ class PropertyReportForm(forms.ModelForm):
         model = PropertyReport
         fields = [
             "house_number",
-            "latitude",
-            "longitude",
             "violation",
             "description",
+            "latitude",
+            "longitude",
+            "image",  # include single image
         ]
-
         widgets = {
             "latitude": forms.HiddenInput(),
             "longitude": forms.HiddenInput(),

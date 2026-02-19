@@ -1,17 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Report Details</h2>
+<div class="container mt-4">
+    <h2>Report Detail</h2>
 
-<p><strong>Report ID:</strong> {{ report.report_id }}</p>
-<p><strong>House:</strong> {{ report.house_number }}</p>
-<p><strong>Violation:</strong> {{ report.violation }}</p>
-<p><strong>Description:</strong> {{ report.description }}</p>
-<p><strong>Status:</strong> {{ report.status }}</p>
-<p><strong>Fine:</strong> ${{ report.fine_amount }}</p>
-<p><strong>Fine Paid:</strong> {{ report.fine_paid }}</p>
-<p><strong>Location:</strong> {{ report.latitude }}, {{ report.longitude }}</p>
-<p><strong>Date:</strong> {{ report.created_at }}</p>
+    <p><strong>House:</strong> {{ report.house_number }}</p>
+    <p><strong>Violation:</strong> {{ report.violation }}</p>
+    <p><strong>Status:</strong> {{ report.status }}</p>
+    <p><strong>Fine:</strong> ${{ report.fine_amount }}</p>
+    <p><strong>Description:</strong> {{ report.description }}</p>
+    <p><strong>Date:</strong> {{ report.created_at|date:"Y-m-d H:i" }}</p>
 
-<a href="{% url 'report_list' %}">Back to List</a>
+    {% if report.images.all %}
+        <h5>Uploaded Image:</h5>
+        {% for img in report.images.all %}
+            <img src="{{ img.image.url }}" alt="Report Image" class="img-fluid mb-2" style="max-width:300px;">
+        {% endfor %}
+    {% endif %}
+
+    {% if report.latitude and report.longitude %}
+        <h5>Location:</h5>
+        <div id="map" style="height:350px;"></div>
+    {% endif %}
+
+    <a href="{% url 'report_list' %}" class="btn btn-secondary mt-3">Back to Reports</a>
+</div>
+
+<script>
+{% if report.latitude and report.longitude %}
+document.addEventListener("DOMContentLoaded", function () {
+    var map = L.map('map').setView([{{ report.latitude }}, {{ report.longitude }}], 16);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    L.marker([{{ report.latitude }}, {{ report.longitude }}]).addTo(map);
+});
+{% endif %}
+</script>
 {% endblock %}

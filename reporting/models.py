@@ -14,6 +14,9 @@ class Community(models.Model):
     contact_email = models.EmailField()
     contact_phone = models.CharField(max_length=20, blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = "Communities"
+
     def __str__(self):
         return self.name
 
@@ -33,7 +36,7 @@ class Profile(models.Model):
         ("ICT", "ICT"),
     ]
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     user_type = models.CharField(max_length=20, choices=USER_TYPES)
     house_number = models.CharField(max_length=20, blank=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
@@ -65,6 +68,9 @@ class ViolationType(models.Model):
     fine_amount = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ["category", "name"]
+
     def __str__(self):
         return f"{self.name} - ${self.fine_amount}"
 
@@ -73,9 +79,12 @@ class ViolationType(models.Model):
 # PROPERTY REPORT
 # ==============================
 
+from django.db import models
+from django.contrib.auth.models import User
+import uuid
+
 
 class PropertyReport(models.Model):
-
     STATUS_CHOICES = [
         ("OPEN", "Open"),
         ("IN_PROGRESS", "In Progress"),
@@ -83,39 +92,37 @@ class PropertyReport(models.Model):
     ]
 
     report_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-
-    reported_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    reported_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name="reports"
+    )
     house_number = models.CharField(max_length=50)
-
-    # 🗺 Location Fields (NEW)
     latitude = models.DecimalField(
         max_digits=9, decimal_places=6, blank=True, null=True
     )
     longitude = models.DecimalField(
         max_digits=9, decimal_places=6, blank=True, null=True
     )
-
-    violation = models.ForeignKey(ViolationType, on_delete=models.SET_NULL, null=True)
-
+    violation = models.ForeignKey(
+        "ViolationType", on_delete=models.SET_NULL, null=True, related_name="reports"
+    )
     description = models.TextField(blank=True)
-
     fine_amount = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True
     )
     fine_paid = models.BooleanField(default=False)
-
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="OPEN")
-
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # 🔥 Add a single image field
+    image = models.ImageField(upload_to="reports/", null=True, blank=True)
+
     def save(self, *args, **kwargs):
-        # Automatically assign fine from predefined violation
         if self.violation and not self.fine_amount:
             self.fine_amount = self.violation.fine_amount
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Report {self.report_id} - {self.house_number}"
+        return f"{self.house_number} - {self.status}"
 
 
 # ==============================
@@ -124,9 +131,16 @@ class PropertyReport(models.Model):
 
 
 class ReportImage(models.Model):
-    report = models.ForeignKey(PropertyReport, on_delete=models.CASCADE)
+    report = models.ForeignKey(
+        PropertyReport,
+        on_delete=models.CASCADE,
+        related_name="images",  # 🔥 VERY IMPORTANT
+    )
     image = models.ImageField(upload_to="reports/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-uploaded_at"]
 
     def __str__(self):
         return f"Image for {self.report.house_number}"
@@ -138,10 +152,15 @@ class ReportImage(models.Model):
 
 
 class ReportComment(models.Model):
-    report = models.ForeignKey(PropertyReport, on_delete=models.CASCADE)
+    report = models.ForeignKey(
+        PropertyReport, on_delete=models.CASCADE, related_name="comments"
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ["created_at"]
+
     def __str__(self):
-        return f"Comment by {self.user.username}"
+        return f"{self.user.username} on {self.report.house_number}"

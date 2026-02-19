@@ -1,39 +1,48 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from .models import PropertyReport
 from .forms import PropertyReportForm
-from django.contrib.auth.decorators import login_required
 
 
+# -----------------------------
+# List all reports (admin or general view)
+# -----------------------------
+@login_required
 def report_list(request):
     reports = PropertyReport.objects.all().order_by("-created_at")
     return render(request, "reporting/report_list.html", {"reports": reports})
 
 
+# -----------------------------
+# Detail view for a single report
+# -----------------------------
+@login_required
 def report_detail(request, report_id):
     report = get_object_or_404(PropertyReport, report_id=report_id)
     return render(request, "reporting/report_detail.html", {"report": report})
 
 
+# -----------------------------
+# Create a new property report
+# -----------------------------
 @login_required
-def report_create(request):
+def create_report(request):
     if request.method == "POST":
         form = PropertyReportForm(request.POST, request.FILES)
         if form.is_valid():
             report = form.save(commit=False)
-            report.reported_by = request.user
+            report.reported_by = request.user  # Link report to logged-in user
             report.save()
-            return redirect("report_detail", report_id=report.report_id)
+            return redirect("resident_dashboard")
     else:
         form = PropertyReportForm()
 
-    return render(request, "reporting/report_form.html", {"form": form})
+    return render(request, "reporting/create_report.html", {"form": form})
 
 
-########-- SHOW reports created by loggedin user-----##
-from django.contrib.auth.decorators import login_required
-from .models import PropertyReport
-
-
+# -----------------------------
+# Resident dashboard (show reports by logged-in user)
+# -----------------------------
 @login_required
 def resident_dashboard(request):
     # Only show reports created by this user
