@@ -27,3 +27,29 @@ def report_create(request):
         form = PropertyReportForm()
 
     return render(request, "reporting/report_form.html", {"form": form})
+
+
+########-- SHOW reports created by loggedin user-----##
+from django.contrib.auth.decorators import login_required
+from .models import PropertyReport
+
+
+@login_required
+def resident_dashboard(request):
+    # Only show reports created by this user
+    reports = PropertyReport.objects.filter(reported_by=request.user).order_by(
+        "-created_at"
+    )
+
+    total_reports = reports.count()
+    open_reports = reports.filter(status="OPEN").count()
+    resolved_reports = reports.filter(status="RESOLVED").count()
+
+    context = {
+        "reports": reports,
+        "total_reports": total_reports,
+        "open_reports": open_reports,
+        "resolved_reports": resolved_reports,
+    }
+
+    return render(request, "reporting/resident_dashboard.html", context)

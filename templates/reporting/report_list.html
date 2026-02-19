@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Violation of rules Report</h2>
+
+<a href="{% url 'report_create' %}">Create New Report</a>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Report ID</th>
+        <th>House</th>
+        <th>Violation</th>
+        <th>Status</th>
+        <th>Fine</th>
+        <th>Date</th>
+    </tr>
+
+    {% for report in reports %}
+    <tr>
+        <td>
+            <a href="{% url 'report_detail' report.report_id %}">
+                {{ report.report_id }}
+            </a>
+        </td>
+        <td>{{ report.house_number }}</td>
+        <td>{{ report.violation }}</td>
+        <td>{{ report.status }}</td>
+        <td>${{ report.fine_amount }}</td>
+        <td>{{ report.created_at }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+ 

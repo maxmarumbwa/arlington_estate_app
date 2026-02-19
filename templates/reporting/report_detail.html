@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Report Details</h2>
+
+<p><strong>Report ID:</strong> {{ report.report_id }}</p>
+<p><strong>House:</strong> {{ report.house_number }}</p>
+<p><strong>Violation:</strong> {{ report.violation }}</p>
+<p><strong>Description:</strong> {{ report.description }}</p>
+<p><strong>Status:</strong> {{ report.status }}</p>
+<p><strong>Fine:</strong> ${{ report.fine_amount }}</p>
+<p><strong>Fine Paid:</strong> {{ report.fine_paid }}</p>
+<p><strong>Location:</strong> {{ report.latitude }}, {{ report.longitude }}</p>
+<p><strong>Date:</strong> {{ report.created_at }}</p>
+
+<a href="{% url 'report_list' %}">Back to List</a>
+{% endblock %}
