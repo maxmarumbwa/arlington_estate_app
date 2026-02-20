@@ -62,3 +62,44 @@ def resident_dashboard(request):
     }
 
     return render(request, "reporting/resident_dashboard.html", context)
+
+
+from django.db.models import Sum, Count
+from django.db.models.functions import TruncMonth
+from .models import PropertyReport
+
+
+def dashboard(request):
+
+    total_reports = PropertyReport.objects.count()
+    pending_reports = PropertyReport.objects.filter(status="OPEN").count()
+    resolved_reports = PropertyReport.objects.filter(status="RESOLVED").count()
+
+    total_fines = (
+        PropertyReport.objects.aggregate(total=Sum("fine_amount"))["total"] or 0
+    )
+
+    monthly_data = (
+        PropertyReport.objects.annotate(month=TruncMonth("created_at"))
+        .values("month")
+        .annotate(count=Count("id"))
+        .order_by("month")
+    )
+
+    months = []
+    counts = []
+
+    for entry in monthly_data:
+        months.append(entry["month"].strftime("%b %Y"))
+        counts.append(entry["count"])
+
+    context = {
+        "total_reports": total_reports,
+        "pending_reports": pending_reports,
+        "resolved_reports": resolved_reports,
+        "total_fines": total_fines,
+        "months": months,
+        "counts": counts,
+    }
+
+    return render(request, "reporting/summary-dashboard.html", context)

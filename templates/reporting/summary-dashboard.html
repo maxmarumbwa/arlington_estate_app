@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Estate Management Dashboard</h2>
+
+    <!-- SUMMARY CARDS -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 bg-primary text-white">
+                <div class="card-body">
+                    <h6>Total Reports</h6>
+                    <h3>{{ total_reports }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 bg-warning text-dark">
+                <div class="card-body">
+                    <h6>Pending Reports</h6>
+                    <h3>{{ pending_reports }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 bg-success text-white">
+                <div class="card-body">
+                    <h6>Resolved Reports</h6>
+                    <h3>{{ resolved_reports }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 bg-danger text-white">
+                <div class="card-body">
+                    <h6>Total Fines Collected</h6>
+                    <h3>${{ total_fines }}</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- MONTHLY CHART -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            Monthly Reports Overview
+        </div>
+        <div class="card-body">
+            <canvas id="monthlyChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('monthlyChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ months|safe }},
+            datasets: [{
+                label: 'Reports per Month',
+                data: {{ counts|safe }},
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

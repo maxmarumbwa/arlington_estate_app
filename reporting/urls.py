@@ -6,4 +6,5 @@ urlpatterns = [
     path("report/<uuid:report_id>/", views.report_detail, name="report_detail"),
     path("report/create/", views.create_report, name="create_report"),
     path("dashboard/", views.resident_dashboard, name="resident_dashboard"),
+    path("main-dashboard/", views.dashboard, name="dashboard"),
 ]
