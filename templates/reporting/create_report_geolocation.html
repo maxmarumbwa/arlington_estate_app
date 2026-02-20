@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Create Property Report</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <!-- Map -->
+        <div class="mb-3">
+            <label>Select Location on Map</label>
+            <div id="map" style="height:350px; width:100%; border-radius:8px;"></div>
+        </div>
+
+        <!-- GPS Button -->
+        <button type="button" id="gpsBtn" class="btn btn-info mb-3">
+            📍 Use My Current Location
+        </button>
+
+        {{ form.latitude }}
+        {{ form.longitude }}
+
+        <button type="submit" class="btn btn-primary">Submit Report</button>
+    </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Initialize Leaflet map
+    var map = L.map('map').setView([-17.898, 31.079], 16); // Default coordinates
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker;
+
+    // Click on map to select location
+    map.on('click', function(e) {
+        var lat = e.latlng.lat.toFixed(6);
+        var lng = e.latlng.lng.toFixed(6);
+
+        if (marker) {
+            marker.setLatLng(e.latlng);
+        } else {
+            marker = L.marker(e.latlng).addTo(map);
+        }
+
+        document.getElementById("id_latitude").value = lat;
+        document.getElementById("id_longitude").value = lng;
+    });
+
+    // GPS button click
+    document.getElementById("gpsBtn").addEventListener("click", function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude.toFixed(6);
+                var lng = position.coords.longitude.toFixed(6);
+
+                if (marker) {
+                    marker.setLatLng([lat, lng]);
+                } else {
+                    marker = L.marker([lat, lng]).addTo(map);
+                }
+
+                map.setView([lat, lng], 16);
+                document.getElementById("id_latitude").value = lat;
+                document.getElementById("id_longitude").value = lng;
+
+            }, function(error) {
+                alert("Could not get your location. Please allow location access.");
+            });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    });
+
+});
+</script>
+
+{% endblock %}

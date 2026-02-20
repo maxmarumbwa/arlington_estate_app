@@ -1,0 +1,83 @@
+/* report_form.css */
+
+/* General container spacing */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Headings */
+h2 {
+    font-weight: 700;
+    color: #0d6efd;
+    margin-bottom: 20px;
+}
+
+/* Leaflet map */
+#map {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+button.btn {
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+button.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Form groups */
+.mb-3 label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* Input fields (crispy forms) */
+input,
+textarea,
+select {
+    border-radius: 8px !important;
+    border: 1px solid #ced4da !important;
+    padding: 8px 12px;
+    width: 100%;
+}
+
+/* Card styling for form sections */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+/* Image previews */
+img.img-thumbnail {
+    border-radius: 8px;
+    max-height: 150px;
+}
+
+/* GPS button */
+#gpsBtn {
+    background-color: #0dcaf0;
+    color: #fff;
+    border: none;
+}
+
+#gpsBtn:hover {
+    background-color: #0bb8d9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #map {
+        height: 250px !important;
+    }
+}

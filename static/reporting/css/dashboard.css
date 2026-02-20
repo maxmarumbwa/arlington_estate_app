@@ -47,3 +47,15 @@
 .container h4 {
     margin-bottom: 20px;
 }
+
+
+/* // main dashboard */
+.stat-card {
+    border-radius: 14px;
+    transition: all 0.2s ease-in-out;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}

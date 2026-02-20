@@ -37,7 +37,7 @@ def create_report(request):
     else:
         form = PropertyReportForm()
 
-    return render(request, "reporting/create_report.html", {"form": form})
+    return render(request, "reporting/create_report_geolocation.html", {"form": form})
 
 
 # -----------------------------

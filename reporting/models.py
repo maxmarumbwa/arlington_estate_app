@@ -89,6 +89,7 @@ class PropertyReport(models.Model):
         ("OPEN", "Open"),
         ("IN_PROGRESS", "In Progress"),
         ("RESOLVED", "Resolved"),
+        ("APPROVED", "Approved"),
     ]
 
     report_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
