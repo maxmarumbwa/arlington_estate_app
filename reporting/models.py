@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from PIL import Image
+import os
 
 
 # ==============================
 # COMMUNITY
 # ==============================
-
-
 class Community(models.Model):
     name = models.CharField(max_length=200, default="Arlington Estate")
     address = models.TextField()
@@ -24,10 +24,7 @@ class Community(models.Model):
 # ==============================
 # USER PROFILE
 # ==============================
-
-
 class Profile(models.Model):
-
     USER_TYPES = [
         ("RESIDENT", "Resident"),
         ("SECURITY", "Security"),
@@ -46,12 +43,9 @@ class Profile(models.Model):
 
 
 # ==============================
-# PREDEFINED VIOLATION TYPES
+# VIOLATION TYPE
 # ==============================
-
-
 class ViolationType(models.Model):
-
     CATEGORY_CHOICES = [
         ("EXTERIOR", "Exterior Maintenance"),
         ("LANDSCAPE", "Landscaping / Tall Grass"),
@@ -78,12 +72,6 @@ class ViolationType(models.Model):
 # ==============================
 # PROPERTY REPORT
 # ==============================
-
-from django.db import models
-from django.contrib.auth.models import User
-import uuid
-
-
 class PropertyReport(models.Model):
     STATUS_CHOICES = [
         ("OPEN", "Open"),
@@ -114,34 +102,67 @@ class PropertyReport(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="OPEN")
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # 🔥 Add a separate date field to control monthly plots
+    # Field for filtering charts
     report_date = models.DateField(null=True, blank=True)
 
-    # 🔥 Add a single image field
+    # Single image (optional)
     image = models.ImageField(upload_to="reports/", null=True, blank=True)
 
     def save(self, *args, **kwargs):
+        # Set fine_amount if not set
         if self.violation and not self.fine_amount:
             self.fine_amount = self.violation.fine_amount
-        # If report_date not set, default to created_at date
+
+        # Default report_date to created_at if not set
         if not self.report_date and self.created_at:
             self.report_date = self.created_at.date()
+
         super().save(*args, **kwargs)
+
+        # Compress image if exists
+        if self.image:
+            self.compress_image()
+
+    def compress_image(self):
+        """Compress uploaded image to under 1MB."""
+        try:
+            img_path = self.image.path
+            img = Image.open(img_path)
+
+            # Convert to RGB for non-JPEG images
+            if img.mode in ("RGBA", "P"):
+                if img.mode == "RGBA":
+                    background = Image.new("RGB", img.size, (255, 255, 255))
+                    background.paste(img, mask=img.split()[3])
+                    img = background
+                else:
+                    img = img.convert("RGB")
+
+            # Resize
+            img.thumbnail((1280, 1280), Image.Resampling.LANCZOS)
+
+            # Compress to under 1MB
+            quality = 85
+            min_quality = 20
+            while True:
+                img.save(img_path, format="JPEG", quality=quality, optimize=True)
+                size = os.path.getsize(img_path)
+                if size <= 1024 * 1024 or quality <= min_quality:
+                    break
+                quality -= 5
+        except Exception as e:
+            print(f"Error compressing image for report {self.id}: {e}")
 
     def __str__(self):
         return f"{self.house_number} - {self.status}"
 
 
 # ==============================
-# REPORT IMAGES
+# REPORT IMAGES (Multiple)
 # ==============================
-
-
 class ReportImage(models.Model):
     report = models.ForeignKey(
-        PropertyReport,
-        on_delete=models.CASCADE,
-        related_name="images",  # 🔥 VERY IMPORTANT
+        "PropertyReport", on_delete=models.CASCADE, related_name="images"
     )
     image = models.ImageField(upload_to="reports/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -152,12 +173,42 @@ class ReportImage(models.Model):
     def __str__(self):
         return f"Image for {self.report.house_number}"
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save first
+
+        if self.image:
+            self.compress_image()
+
+    def compress_image(self):
+        """Compress uploaded image to under 1MB."""
+        try:
+            img_path = self.image.path
+            img = Image.open(img_path)
+
+            if img.mode in ("RGBA", "P"):
+                if img.mode == "RGBA":
+                    background = Image.new("RGB", img.size, (255, 255, 255))
+                    background.paste(img, mask=img.split()[3])
+                    img = background
+                else:
+                    img = img.convert("RGB")
+
+            img.thumbnail((1280, 1280), Image.Resampling.LANCZOS)
+
+            quality = 85
+            while True:
+                img.save(img_path, format="JPEG", quality=quality, optimize=True)
+                size = os.path.getsize(img_path)
+                if size <= 1024 * 1024 or quality <= 20:
+                    break
+                quality -= 5
+        except Exception as e:
+            print(f"Error compressing image: {e}")
+
 
 # ==============================
 # REPORT COMMENTS
 # ==============================
-
-
 class ReportComment(models.Model):
     report = models.ForeignKey(
         PropertyReport, on_delete=models.CASCADE, related_name="comments"
