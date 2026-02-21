@@ -46,11 +46,17 @@
 
     </div>
 
-
-    <!-- MONTHLY CHART -->
+    <!-- YEAR SELECT & MONTHLY CHART -->
     <div class="card shadow-sm">
-        <div class="card-header bg-dark text-white">
-            Monthly Reports Overview
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <span>Monthly Reports Overview</span>
+            <form method="get" id="yearForm">
+                <select name="year" class="form-select form-select-sm" onchange="document.getElementById('yearForm').submit()">
+                    {% for y in years_list %}
+                        <option value="{{ y }}" {% if selected_year == y %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+            </form>
         </div>
         <div class="card-body">
             <canvas id="monthlyChart"></canvas>
@@ -59,35 +65,30 @@
 
 </div>
 
-
-<!-- Chart.js CDN -->
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
-    const ctx = document.getElementById('monthlyChart');
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {{ months|safe }},
-            datasets: [{
-                label: 'Reports per Month',
-                data: {{ counts|safe }},
-                borderWidth: 1
-            }]
+const ctx = document.getElementById('monthlyChart');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ months|safe }},
+        datasets: [{
+            label: 'Reports per Month ({{ selected_year }})',
+            data: {{ counts|safe }},
+            backgroundColor: '#0d6efd'
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: { beginAtZero: true }
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: true }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+        plugins: {
+            legend: { display: true }
         }
-    });
+    }
+});
 </script>
 
 {% endblock %}

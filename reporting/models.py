@@ -114,12 +114,18 @@ class PropertyReport(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="OPEN")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # 🔥 Add a separate date field to control monthly plots
+    report_date = models.DateField(null=True, blank=True)
+
     # 🔥 Add a single image field
     image = models.ImageField(upload_to="reports/", null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.violation and not self.fine_amount:
             self.fine_amount = self.violation.fine_amount
+        # If report_date not set, default to created_at date
+        if not self.report_date and self.created_at:
+            self.report_date = self.created_at.date()
         super().save(*args, **kwargs)
 
     def __str__(self):

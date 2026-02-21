@@ -64,34 +64,38 @@ def resident_dashboard(request):
     return render(request, "reporting/resident_dashboard.html", context)
 
 
-from django.db.models import Sum, Count
 from django.db.models.functions import TruncMonth
-from .models import PropertyReport
+from django.db.models import Count, Sum
+from datetime import datetime
+from reporting.models import PropertyReport
 
 
 def dashboard(request):
+    selected_year = int(request.GET.get("year", datetime.now().year))
+    reports = PropertyReport.objects.filter(report_date__year=selected_year)
 
-    total_reports = PropertyReport.objects.count()
-    pending_reports = PropertyReport.objects.filter(status="OPEN").count()
-    resolved_reports = PropertyReport.objects.filter(status="RESOLVED").count()
+    # Summary
+    total_reports = reports.count()
+    pending_reports = reports.filter(status="OPEN").count()
+    resolved_reports = reports.filter(status="RESOLVED").count()
+    total_fines = reports.aggregate(total=Sum("fine_amount"))["total"] or 0
 
-    total_fines = (
-        PropertyReport.objects.aggregate(total=Sum("fine_amount"))["total"] or 0
-    )
-
+    # Monthly counts
     monthly_data = (
-        PropertyReport.objects.annotate(month=TruncMonth("created_at"))
+        reports.annotate(month=TruncMonth("report_date"))
         .values("month")
         .annotate(count=Count("id"))
-        .order_by("month")
     )
+
+    counts_dict = {entry["month"].month: entry["count"] for entry in monthly_data}
 
     months = []
     counts = []
+    for m in range(1, 13):
+        months.append(datetime(selected_year, m, 1).strftime("%b"))
+        counts.append(counts_dict.get(m, 0))
 
-    for entry in monthly_data:
-        months.append(entry["month"].strftime("%b %Y"))
-        counts.append(entry["count"])
+    years_list = list(range(2020, datetime.now().year + 1))
 
     context = {
         "total_reports": total_reports,
@@ -100,6 +104,8 @@ def dashboard(request):
         "total_fines": total_fines,
         "months": months,
         "counts": counts,
+        "selected_year": selected_year,
+        "years_list": years_list,
     }
 
     return render(request, "reporting/summary-dashboard.html", context)
