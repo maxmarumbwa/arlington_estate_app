@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="top-bar">
+    <div>
+        Welcome, {{ request.user.username }}
+    </div>
+
+    <div>
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </div>
+</div>
 
 <div class="container mt-4">
 
@@ -143,7 +152,6 @@ new Chart(barCtx, {
     }
 });
 
-
 /* ===============================
    Violation Pie Chart
 ================================= */
@@ -179,3 +187,5 @@ new Chart(pieCtx, {
 </script>
 
 {% endblock %}
+
+
