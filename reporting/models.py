@@ -106,7 +106,12 @@ class PropertyReport(models.Model):
     report_date = models.DateField(null=True, blank=True)
 
     # Single image (optional)
-    image = models.ImageField(upload_to="reports/", null=True, blank=True)
+    image = models.ImageField(
+        upload_to="reports/",
+        null=True,
+        blank=True,
+        default="reports/default.png",  # <-- default image
+    )
 
     def save(self, *args, **kwargs):
         # Set fine_amount if not set

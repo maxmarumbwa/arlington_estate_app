@@ -26,8 +26,27 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "pound-actual-everybody-recipient.trycloudflare.com",
+]
 
+# Get the current host from environment or request
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "https://*.trycloudflare.com",  # Allow all trycloudflare subdomains
+]
+
+# Or if you want to be more permissive during development
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS.extend(
+        [
+            "https://*.trycloudflare.com",
+            "http://*.ngrok.io",  # if you also use ngrok
+        ]
+    )
 
 # Application definition
 
