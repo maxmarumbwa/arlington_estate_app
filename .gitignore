@@ -1,4 +1,7 @@
 /env
 .env
 env/
+/media/
 media/
+/media/*
+media/*
