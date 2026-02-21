@@ -64,38 +64,82 @@ def resident_dashboard(request):
     return render(request, "reporting/resident_dashboard.html", context)
 
 
-from django.db.models.functions import TruncMonth
-from django.db.models import Count, Sum
 from datetime import datetime
+from django.db.models import Count, Sum
+from django.db.models.functions import TruncMonth
+from django.shortcuts import render
 from reporting.models import PropertyReport
 
 
 def dashboard(request):
-    selected_year = int(request.GET.get("year", datetime.now().year))
+    current_year = datetime.now().year
+
+    selected_year = int(request.GET.get("year", current_year))
+    selected_month = request.GET.get("month")
+
     reports = PropertyReport.objects.filter(report_date__year=selected_year)
 
-    # Summary
+    # 🔹 Filter by month if provided
+    if selected_month:
+        selected_month = int(selected_month)
+        reports = reports.filter(report_date__month=selected_month)
+
+    # ==========================
+    # SUMMARY
+    # ==========================
     total_reports = reports.count()
     pending_reports = reports.filter(status="OPEN").count()
     resolved_reports = reports.filter(status="RESOLVED").count()
     total_fines = reports.aggregate(total=Sum("fine_amount"))["total"] or 0
 
-    # Monthly counts
-    monthly_data = (
-        reports.annotate(month=TruncMonth("report_date"))
-        .values("month")
-        .annotate(count=Count("id"))
-    )
-
-    counts_dict = {entry["month"].month: entry["count"] for entry in monthly_data}
-
+    # ==========================
+    # MONTHLY BAR CHART (Full year only)
+    # ==========================
     months = []
     counts = []
-    for m in range(1, 13):
-        months.append(datetime(selected_year, m, 1).strftime("%b"))
-        counts.append(counts_dict.get(m, 0))
 
-    years_list = list(range(2020, datetime.now().year + 1))
+    if not selected_month:
+        monthly_data = (
+            PropertyReport.objects.filter(report_date__year=selected_year)
+            .annotate(month=TruncMonth("report_date"))
+            .values("month")
+            .annotate(count=Count("id"))
+        )
+
+        counts_dict = {entry["month"].month: entry["count"] for entry in monthly_data}
+
+        for m in range(1, 13):
+            months.append(datetime(selected_year, m, 1).strftime("%b"))
+            counts.append(counts_dict.get(m, 0))
+    else:
+        months = ["Selected Month"]
+        counts = [total_reports]
+
+    # ==========================
+    # PIE CHART
+    # ==========================
+    violation_data = (
+        reports.values("violation__name").annotate(count=Count("id")).order_by("-count")
+    )
+
+    violation_labels = [v["violation__name"] for v in violation_data]
+    violation_counts = [v["count"] for v in violation_data]
+
+    years_list = list(range(2020, current_year + 1))
+    months_list = [
+        (1, "January"),
+        (2, "February"),
+        (3, "March"),
+        (4, "April"),
+        (5, "May"),
+        (6, "June"),
+        (7, "July"),
+        (8, "August"),
+        (9, "September"),
+        (10, "October"),
+        (11, "November"),
+        (12, "December"),
+    ]
 
     context = {
         "total_reports": total_reports,
@@ -104,8 +148,12 @@ def dashboard(request):
         "total_fines": total_fines,
         "months": months,
         "counts": counts,
+        "violation_labels": violation_labels,
+        "violation_counts": violation_counts,
         "selected_year": selected_year,
+        "selected_month": selected_month,
         "years_list": years_list,
+        "months_list": months_list,
     }
 
     return render(request, "reporting/summary-dashboard.html", context)
