@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "pound-actual-everybody-recipient.trycloudflare.com",
+    "broad-durable-breakdown-prize.trycloudflare.com",
 ]
 
 # Get the current host from environment or request

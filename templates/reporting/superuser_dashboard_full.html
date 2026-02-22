@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav class="col-md-2 d-none d-md-block bg-dark sidebar pt-3">
+      <div class="position-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">
+            <a class="nav-link text-white" href="{% url 'superuser_dashboard' %}">Dashboard</a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link text-white" href="{% url 'superuser_reports' %}">Manage Reports</a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link text-white" href="{% url 'superuser_users' %}">Manage Users</a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link text-white" href="#">Communities</a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link text-white" href="#">Violations</a>
+          </li>
+          <li class="nav-item mt-3">
+            <a class="nav-link text-danger" href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="col-md-10 ms-sm-auto px-4">
+      <h2 class="mt-4">Superuser Dashboard</h2>
+
+      <div class="row g-4 mt-3">
+        <!-- Summary cards -->
+        <div class="col-md-2">
+          <div class="card text-white bg-primary">
+            <div class="card-body">
+              <h6>Total Reports</h6>
+              <h4>{{ total_reports }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card text-white bg-success">
+            <div class="card-body">
+              <h6>Open Reports</h6>
+              <h4>{{ open_reports }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card text-white bg-warning">
+            <div class="card-body">
+              <h6>Resolved Reports</h6>
+              <h4>{{ resolved_reports }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card text-white bg-danger">
+            <div class="card-body">
+              <h6>Total Fines</h6>
+              <h4>${{ total_fines }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card text-white bg-info">
+            <div class="card-body">
+              <h6>Total Users</h6>
+              <h4>{{ total_users }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="row mt-5">
+        <div class="col-md-6">
+          <h5>Monthly Reports ({{ now|date:"Y" }})</h5>
+          <canvas id="monthlyChart"></canvas>
+        </div>
+        <div class="col-md-6">
+          <h5>Top Violations</h5>
+          <ul class="list-group">
+            {% for v in top_violations %}
+            <li class="list-group-item d-flex justify-content-between">
+              {{ v.violation__name }}
+              <span class="badge bg-primary rounded-pill">{{ v.count }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var ctx = document.getElementById('monthlyChart').getContext('2d');
+var monthlyChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ months|safe }},
+        datasets: [{
+            label: 'Reports',
+            data: {{ counts|safe }},
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Monthly Reports' }
+        }
+    }
+});
+</script>
+{% endblock %}

@@ -178,7 +178,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("create_report")
+            return redirect("report_list")
         else:
             messages.error(request, "Invalid username or password")
 
@@ -188,3 +188,53 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("login")
+
+
+### Django admin interface
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from reporting.models import PropertyReport, ViolationType, Community, Profile
+from django.contrib.auth.models import User
+from django.db.models import Count, Sum
+
+
+@login_required
+def superuser_dashboard(request):
+    # Only superusers can access this page
+    if not request.user.is_superuser:
+        return redirect("dashboard")
+
+    # =========================
+    # Summary stats
+    # =========================
+    total_reports = PropertyReport.objects.count()
+    total_users = User.objects.count()
+    total_communities = Community.objects.count()
+    total_violations = ViolationType.objects.count()
+    total_fines = (
+        PropertyReport.objects.aggregate(total=Sum("fine_amount"))["total"] or 0
+    )
+    open_reports = PropertyReport.objects.filter(status="OPEN").count()
+    resolved_reports = PropertyReport.objects.filter(status="RESOLVED").count()
+
+    # =========================
+    # Top Violations
+    # =========================
+    top_violations = (
+        PropertyReport.objects.values("violation__name")
+        .annotate(count=Count("id"))
+        .order_by("-count")[:5]
+    )
+
+    context = {
+        "total_reports": total_reports,
+        "total_users": total_users,
+        "total_communities": total_communities,
+        "total_violations": total_violations,
+        "total_fines": total_fines,
+        "open_reports": open_reports,
+        "resolved_reports": resolved_reports,
+        "top_violations": top_violations,
+    }
+
+    return render(request, "reporting/superuser_dashboard.html", context)

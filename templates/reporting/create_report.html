@@ -79,7 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 var lng = position.coords.longitude.toFixed(6);
                 if (marker) marker.setLatLng([lat, lng]);
                 else marker = L.marker([lat, lng]).addTo(map);
-                map.setView([lat, lng], 16);
+                map.setView([lat, 
+                
+                lng], 16);
                 document.getElementById("id_latitude").value = lat;
                 document.getElementById("id_longitude").value = lng;
             }, function() {
