@@ -1,0 +1,127 @@
+{
+        % extends "base.html" %
+    }
+
+        {
+        % load crispy_forms_tags %
+    }
+
+        {
+        % block content %
+    }
+
+    <link rel="stylesheet" href="{% static 'css/report_cards.css' %}"><link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /><div class="container mt-4"><h2>Create Property Report</h2><form method="POST" enctype="multipart/form-data"> {
+        % csrf_token %
+    }
+
+    < !-- General Information Card --><div class="card"><div class="card-header bg-primary text-white">General Information</div><div class="card-body"> {
+            {
+            form.house_number|crispy
+        }
+    }
+
+        {
+            {
+            form.violation|crispy
+        }
+    }
+
+        {
+            {
+            form.description|crispy
+        }
+    }
+
+        {
+            {
+            form.status|crispy
+        }
+    }
+
+    </div></div>< !-- Image Upload Card --><div class="card"><div class="card-header bg-secondary text-white">Upload Evidence Image</div><div class="card-body"> {
+            {
+            form.image|crispy
+        }
+    }
+
+    <img id="imagePreview" src="#" alt="Preview" style="display:none;"></div></div>< !-- Location Card --><div class="card"><div class="card-header bg-success text-white">Select Location</div><div class="card-body"><button type="button" id="gpsBtn" class="btn">📍 Use My Current Location</button><div id="map"></div> {
+            {
+            form.latitude
+        }
+    }
+
+        {
+            {
+            form.longitude
+        }
+    }
+
+    </div></div>< !-- Submit Button --><div class="text-end mb-4"><button type="submit" class="btn btn-primary btn-lg">Submit Report</button></div></form></div>< !-- Scripts --><script src="https://unpkg.com/leaflet/dist/leaflet.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
+            // Initialize map
+            var map=L.map('map').setView([-17.898, 31.079], 16);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+        var marker;
+
+        // Click map to set marker
+        map.on('click', function(e) {
+                var lat=e.latlng.lat.toFixed(6);
+                var lng=e.latlng.lng.toFixed(6);
+                if (marker) marker.setLatLng(e.latlng);
+                else marker=L.marker(e.latlng).addTo(map);
+                document.getElementById("id_latitude").value=lat;
+                document.getElementById("id_longitude").value=lng;
+            });
+
+        // GPS button
+        document.getElementById("gpsBtn").addEventListener("click", function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                            var lat=position.coords.latitude.toFixed(6);
+                            var lng=position.coords.longitude.toFixed(6);
+                            if (marker) marker.setLatLng([lat, lng]);
+                            else marker=L.marker([lat, lng]).addTo(map);
+                            map.setView([lat, lng], 16);
+                            document.getElementById("id_latitude").value=lat;
+                            document.getElementById("id_longitude").value=lng;
+                        }
+
+                        , function() {
+                            alert("Could not get your location. Allow location access.");
+                        });
+                }
+
+                else {
+                    alert("Geolocation is not supported by your browser.");
+                }
+            });
+
+        // Image preview
+        var imageInput=document.getElementById("id_image");
+        var preview=document.getElementById("imagePreview");
+
+        imageInput.addEventListener("change", function() {
+                var file=imageInput.files[0];
+
+                if(file) {
+                    var reader=new FileReader();
+
+                    reader.onload=function(e) {
+                        preview.src=e.target.result; preview.style.display="block";
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+
+                else {
+                    preview.style.display="none";
+                }
+            });
+    });
+
+</script> {
+    % endblock %
+}

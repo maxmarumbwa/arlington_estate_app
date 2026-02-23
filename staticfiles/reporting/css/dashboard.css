@@ -1,0 +1,160 @@
+/* reporting/static/reporting/css/dashboard.css */
+
+/* Cards styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Table styling */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+}
+
+.table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.img-thumbnail {
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.img-thumbnail:hover {
+    transform: scale(1.2);
+}
+
+/* Buttons */
+.btn-success {
+    border-radius: 8px;
+}
+
+.container h2,
+.container h4 {
+    margin-bottom: 20px;
+}
+
+
+/* // main dashboard */
+.stat-card {
+    border-radius: 14px;
+    transition: all 0.2s ease-in-out;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* report_cards.css */
+
+/* General container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+}
+
+/* Page title */
+h2 {
+    color: #0d6efd;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+}
+
+/* Card headers */
+.card-header {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Form elements */
+input,
+select,
+textarea {
+    border-radius: 8px !important;
+    border: 1px solid #ced4da !important;
+    padding: 10px 12px;
+    width: 100%;
+}
+
+/* Buttons */
+button.btn {
+    border-radius: 25px;
+    font-weight: 600;
+    padding: 10px 25px;
+    transition: all 0.3s ease;
+}
+
+button.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Image preview */
+#imagePreview {
+    max-height: 250px;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: block;
+}
+
+/* Map styling */
+#map {
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    height: 350px;
+    margin-top: 10px;
+}
+
+/* GPS Button */
+#gpsBtn {
+    background-color: #0dcaf0;
+    color: #fff;
+    border: none;
+    margin-bottom: 10px;
+}
+
+#gpsBtn:hover {
+    background-color: #0bb8d9;
+}
+
+/* Status badges */
+.badge {
+    font-size: 0.9rem;
+    padding: 0.4em 0.8em;
+    border-radius: 8px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    #map {
+        height: 250px;
+    }
+
+    #imagePreview {
+        max-width: 100%;
+    }
+}

@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="top-bar">
     <div>
         Welcome, {{ request.user.username }}
     </div>
-
     <div>
         <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
     </div>
@@ -12,111 +12,135 @@
 
 <div class="container mt-4">
 
-   <!-- Header + Filters -->
+<!-- ===============================
+     Header + Filters
+================================= -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Estate Management Dashboard</h2>
 
     <form method="get" class="d-flex gap-2">
 
         <!-- Year -->
-        <select name="year" class="form-select">
+        <select name="year" class="form-select"
+                onchange="this.form.submit()">
             {% for year in years_list %}
-                <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>
+                <option value="{{ year }}"
+                    {% if year == selected_year %}selected{% endif %}>
                     {{ year }}
                 </option>
             {% endfor %}
         </select>
 
         <!-- Month -->
-        <select name="month" class="form-select">
+        <select name="month" class="form-select"
+                onchange="this.form.submit()">
             <option value="">All Months</option>
             {% for num, name in months_list %}
-                <option value="{{ num }}" {% if num|stringformat:"s" == selected_month|stringformat:"s" %}selected{% endif %}>
+                <option value="{{ num }}"
+                    {% if num|stringformat:"s" == selected_month|stringformat:"s" %}selected{% endif %}>
                     {{ name }}
                 </option>
             {% endfor %}
         </select>
 
-        <button type="submit" class="btn btn-dark">
-            Filter
-        </button>
-
     </form>
 </div>
 
-    <!-- SUMMARY CARDS -->
-    <div class="row g-4 mb-4">
+<!-- ===============================
+     SUMMARY CARDS
+================================= -->
+<div class="row g-4 mb-4">
 
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0 bg-primary text-white h-100">
-                <div class="card-body">
-                    <h6>Total Reports</h6>
-                    <h3>{{ total_reports }}</h3>
-                </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-primary text-white h-100">
+            <div class="card-body">
+                <h6>Total Reports</h6>
+                <h3>{{ total_reports }}</h3>
             </div>
         </div>
-
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0 bg-warning text-dark h-100">
-                <div class="card-body">
-                    <h6>Pending Reports</h6>
-                    <h3>{{ pending_reports }}</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0 bg-success text-white h-100">
-                <div class="card-body">
-                    <h6>Resolved Reports</h6>
-                    <h3>{{ resolved_reports }}</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0 bg-danger text-white h-100">
-                <div class="card-body">
-                    <h6>Total Fines Collected</h6>
-                    <h3>${{ total_fines }}</h3>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <!-- CHARTS ROW -->
-    <div class="row g-4">
-
-        <!-- Monthly Bar Chart -->
-        <div class="col-md-6">
-            <div class="card shadow-sm h-100">
-                <div class="card-header bg-dark text-white">
-                    Monthly Reports Overview ({{ selected_year }})
-                </div>
-                <div class="card-body">
-                    <canvas id="monthlyChart"></canvas>
-                </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-warning text-dark h-100">
+            <div class="card-body">
+                <h6>Pending Reports</h6>
+                <h3>{{ pending_reports }}</h3>
             </div>
         </div>
+    </div>
 
-        <!-- Pie Chart -->
-        <div class="col-md-6">
-            <div class="card shadow-sm h-100">
-                <div class="card-header bg-secondary text-white">
-                    Nature of Violations ({{ selected_year }})
-                </div>
-                <div class="card-body">
-                    <canvas id="violationPieChart"></canvas>
-                </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-success text-white h-100">
+            <div class="card-body">
+                <h6>Resolved Reports</h6>
+                <h3>{{ resolved_reports }}</h3>
             </div>
         </div>
+    </div>
 
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-danger text-white h-100">
+            <div class="card-body">
+                <h6>Total Fines Collected</h6>
+                <h3>${{ total_fines }}</h3>
+            </div>
+        </div>
     </div>
 
 </div>
 
-<!-- Chart.js CDN -->
+<!-- ===============================
+     CHARTS
+================================= -->
+<div class="row g-4">
+
+    <!-- Monthly Bar Chart -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-dark text-white">
+                Monthly Reports Overview ({{ selected_year }})
+            </div>
+            <div class="card-body">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-secondary text-white">
+                Nature of Violations ({{ selected_year }})
+            </div>
+            <div class="card-body">
+                <canvas id="violationPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===============================
+     MAP SECTION
+================================= -->
+<div class="row g-4 mt-4">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                Reports Map (Filtered)
+            </div>
+            <div class="card-body">
+                <div id="dashboardMap" style="height:500px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!-- ===============================
+     CHART.JS
+================================= -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -138,15 +162,11 @@ new Chart(barCtx, {
     },
     options: {
         responsive: true,
-        plugins: {
-            legend: { display: false }
-        },
+        plugins: { legend: { display: false } },
         scales: {
             y: {
                 beginAtZero: true,
-                ticks: {
-                    precision: 0
-                }
+                ticks: { precision: 0 }
             }
         }
     }
@@ -164,28 +184,40 @@ new Chart(pieCtx, {
         datasets: [{
             data: {{ violation_counts|safe }},
             backgroundColor: [
-                '#0d6efd',
-                '#198754',
-                '#ffc107',
-                '#dc3545',
-                '#6f42c1',
-                '#20c997',
-                '#fd7e14',
-                '#6610f2'
+                '#0d6efd','#198754','#ffc107','#dc3545',
+                '#6f42c1','#20c997','#fd7e14','#6610f2'
             ]
         }]
     },
     options: {
         responsive: true,
-        plugins: {
-            legend: {
-                position: 'right'
-            }
-        }
+        plugins: { legend: { position: 'right' } }
     }
+});
+
+/* ===============================
+   DASHBOARD MAP
+================================= */
+document.addEventListener("DOMContentLoaded", function () {
+
+    var map = L.map('dashboardMap').setView([-17.898, 31.079], 16);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    {% for report in map_reports %}
+        L.marker([{{ report.latitude }}, {{ report.longitude }}])
+            .addTo(map)
+            .bindPopup(`
+                <strong>House:</strong> {{ report.house_number }}<br>
+                <strong>Violation:</strong> {{ report.violation }}<br>
+                <strong>Status:</strong> {{ report.status }}<br>
+                <strong>Date:</strong> {{ report.report_date }}
+            `);
+    {% endfor %}
+
 });
 </script>
 
 {% endblock %}
-
-

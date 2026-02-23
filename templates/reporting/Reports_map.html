@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Reports location</h2>
+    <div id="map" style="height:600px;" class="rounded border"></div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // 🔹 Always center on these coordinates and zoom 6
+    var map = L.map('map').setView([-17.898, 31.079], 16);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add markers for all reports
+    {% for report in reports %}
+        L.marker([{{ report.latitude }}, {{ report.longitude }}]).addTo(map)
+            .bindPopup(`
+                <strong>House:</strong> {{ report.house_number }}<br>
+                <strong>Violation:</strong> {{ report.violation }}<br>
+                <strong>Status:</strong> {{ report.status }}<br>
+                <a href="{% url 'report_detail' report.report_id %}">View Details</a>
+            `);
+    {% endfor %}
+
+});
+</script>
+
+{% endblock %}

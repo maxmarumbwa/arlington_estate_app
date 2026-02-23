@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Estate manager Dashboard</h2>
+
+    <div class="row g-4">
+        <!-- Summary Cards -->
+        <div class="col-md-3">
+            <div class="card shadow-sm text-white bg-primary">
+                <div class="card-body">
+                    <h5>Total Reports</h5>
+                    <h3>{{ total_reports }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-white bg-success">
+                <div class="card-body">
+                    <h5>Open Reports</h5>
+                    <h3>{{ open_reports }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-white bg-warning">
+                <div class="card-body">
+                    <h5>Resolved Reports</h5>
+                    <h3>{{ resolved_reports }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-white bg-danger">
+                <div class="card-body">
+                    <h5>Total Fines ($)</h5>
+                    <h3>{{ total_fines }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Management Links -->
+    <div class="row mt-5">
+        <div class="col-md-3">
+            <a href="{% url 'report_list' %}" class="btn btn-outline-primary w-100 mb-3">
+                Manage Reports
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'create_report' %}" class="btn btn-outline-success w-100 mb-3">
+                Create New Report
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'resident_dashboard' %}" class="btn btn-outline-warning w-100 mb-3">
+                Resident Dashboard
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'login' %}" class="btn btn-outline-danger w-100 mb-3">
+                Manage Users
+            </a>
+        </div>
+    </div>
+
+    <!-- Top 5 Violations -->
+    <div class="mt-5">
+        <h4>Top Violations</h4>
+        <ul class="list-group">
+            {% for v in top_violations %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ v.violation__name }}
+                    <span class="badge bg-primary rounded-pill">{{ v.count }}</span>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No violations reported yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+{% endblock %}

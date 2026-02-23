@@ -155,6 +155,8 @@ def dashboard(request):
         "selected_month": selected_month,
         "years_list": years_list,
         "months_list": months_list,
+        # add mal
+        "map_reports": reports.exclude(latitude__isnull=True, longitude__isnull=True),
     }
 
     return render(request, "reporting/summary-dashboard.html", context)
@@ -178,7 +180,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("report_list")
+            return redirect("create_report")
         else:
             messages.error(request, "Invalid username or password")
 
@@ -238,3 +240,19 @@ def superuser_dashboard(request):
     }
 
     return render(request, "reporting/superuser_dashboard.html", context)
+
+
+# ---------------- CREATE MAP----------------
+from django.contrib.auth.decorators import login_required
+from .models import PropertyReport
+
+
+@login_required
+def reports_map(request):
+    reports = PropertyReport.objects.exclude(
+        latitude__isnull=True, longitude__isnull=True
+    )
+
+    context = {"reports": reports}
+
+    return render(request, "reporting/reports_map.html", context)
