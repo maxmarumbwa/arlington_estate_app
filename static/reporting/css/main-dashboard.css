@@ -50,3 +50,9 @@
 .table-card {
     margin-top: 20px;
 }
+
+.container {
+    max-width: 100% !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}

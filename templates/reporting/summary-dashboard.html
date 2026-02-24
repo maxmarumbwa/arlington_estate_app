@@ -1,4 +1,74 @@
 {% extends "base.html" %}
+    {% block extra_css %}
+<style>
+.card-body{
+    height:300px
+}
+
+    #dashboardMap{
+    height:200px
+    
+    }
+
+    /* Global container width adjustment */
+    .container.mt2 {
+        max-width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    /* Navbar container adjustment */
+    .navbar .container,
+    .navbar .container-fluid {
+        max-width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    /* Make navbar links more compact for more items */
+    .navbar-nav {
+        flex-wrap: nowrap;
+    }
+    
+    .navbar-nav .nav-link {
+        white-space: nowrap;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 0.95rem;
+    }
+    
+    /* Adjust for smaller screens */
+    @media (max-width: 1200px) {
+        .navbar-nav .nav-link {
+            padding-left: 6px;
+            padding-right: 6px;
+            font-size: 0.85rem;
+        }
+    }
+    
+    /* Dashboard cards layout */
+    .row {
+        margin-left: -8px;
+        margin-right: -8px;
+    }
+    
+    .col-md-3, .col-md-4, .col-md-6 {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    
+    /* Filter section - prevent wrapping */
+    .d-flex.gap-2 {
+        flex-wrap: nowrap;
+    }
+    
+    @media (max-width: 768px) {
+        .d-flex.gap-2 {
+            flex-wrap: wrap;
+        }
+    }
+</style>
+{% endblock %}
 {% block content %}
 
 <div class="top-bar">

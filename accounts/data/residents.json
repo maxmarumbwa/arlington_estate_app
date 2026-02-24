@@ -1,0 +1,589 @@
+{
+    "residents": [
+        {
+            "user": {
+                "username": "tendai.moyo",
+                "email": "tendai.moyo@email.com",
+                "first_name": "Tendai",
+                "last_name": "Moyo",
+                "password": "temporary123"
+            },
+            "stand_numb": "a01",
+            "phone": "+263771000001",
+            "monthly_fee": "120.00",
+            "current_balance": "-240.00",
+            "last_payment_date": "2025-01-10",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "nyasha.dube",
+                "email": "nyasha.dube@email.com",
+                "first_name": "Nyasha",
+                "last_name": "Dube",
+                "password": "temporary123"
+            },
+            "stand_numb": "a02",
+            "phone": "+263771000002",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-01-12",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "brian.chirwa",
+                "email": "brian.chirwa@email.com",
+                "first_name": "Brian",
+                "last_name": "Chirwa",
+                "password": "temporary123"
+            },
+            "stand_numb": "a03",
+            "phone": "+263771000003",
+            "monthly_fee": "120.00",
+            "current_balance": "-120.00",
+            "last_payment_date": "2024-12-15",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "rudo.ncube",
+                "email": "rudo.ncube@email.com",
+                "first_name": "Rudo",
+                "last_name": "Ncube",
+                "password": "temporary123"
+            },
+            "stand_numb": "a04",
+            "phone": "+263771000004",
+            "monthly_fee": "120.00",
+            "current_balance": "-360.00",
+            "last_payment_date": "2024-11-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "tapiwa.zhou",
+                "email": "tapiwa.zhou@email.com",
+                "first_name": "Tapiwa",
+                "last_name": "Zhou",
+                "password": "temporary123"
+            },
+            "stand_numb": "a09",
+            "phone": "+263771000005",
+            "monthly_fee": "120.00",
+            "current_balance": "120.00",
+            "last_payment_date": "2025-02-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "kuda.sibanda",
+                "email": "kuda.sibanda@email.com",
+                "first_name": "Kuda",
+                "last_name": "Sibanda",
+                "password": "temporary123"
+            },
+            "stand_numb": "a10",
+            "phone": "+263771000006",
+            "monthly_fee": "120.00",
+            "current_balance": "-240.00",
+            "last_payment_date": "2024-12-10",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "memory.mlambo",
+                "email": "memory.mlambo@email.com",
+                "first_name": "Memory",
+                "last_name": "Mlambo",
+                "password": "temporary123"
+            },
+            "stand_numb": "a12",
+            "phone": "+263771000007",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-01-30",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "victor.gumbo",
+                "email": "victor.gumbo@email.com",
+                "first_name": "Victor",
+                "last_name": "Gumbo",
+                "password": "temporary123"
+            },
+            "stand_numb": "a13",
+            "phone": "+263771000008",
+            "monthly_fee": "120.00",
+            "current_balance": "-120.00",
+            "last_payment_date": "2024-12-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "lindiwe.mpofu",
+                "email": "lindiwe.mpofu@email.com",
+                "first_name": "Lindiwe",
+                "last_name": "Mpofu",
+                "password": "temporary123"
+            },
+            "stand_numb": "a14",
+            "phone": "+263771000009",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-02-05",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "simba.mutasa",
+                "email": "simba.mutasa@email.com",
+                "first_name": "Simba",
+                "last_name": "Mutasa",
+                "password": "temporary123"
+            },
+            "stand_numb": "a15",
+            "phone": "+263771000010",
+            "monthly_fee": "120.00",
+            "current_balance": "-480.00",
+            "last_payment_date": "2024-10-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "tariro.banda",
+                "email": "tariro.banda@email.com",
+                "first_name": "Tariro",
+                "last_name": "Banda",
+                "password": "temporary123"
+            },
+            "stand_numb": "a16",
+            "phone": "+263771000011",
+            "monthly_fee": "120.00",
+            "current_balance": "-120.00",
+            "last_payment_date": "2025-01-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "elton.maphosa",
+                "email": "elton.maphosa@email.com",
+                "first_name": "Elton",
+                "last_name": "Maphosa",
+                "password": "temporary123"
+            },
+            "stand_numb": "a17",
+            "phone": "+263771000012",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-02-10",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "grace.chikore",
+                "email": "grace.chikore@email.com",
+                "first_name": "Grace",
+                "last_name": "Chikore",
+                "password": "temporary123"
+            },
+            "stand_numb": "a18",
+            "phone": "+263771000013",
+            "monthly_fee": "120.00",
+            "current_balance": "-240.00",
+            "last_payment_date": "2024-12-20",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "peter.mushonga",
+                "email": "peter.mushonga@email.com",
+                "first_name": "Peter",
+                "last_name": "Mushonga",
+                "password": "temporary123"
+            },
+            "stand_numb": "a19",
+            "phone": "+263771000014",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-01-15",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "alice.gatsi",
+                "email": "alice.gatsi@email.com",
+                "first_name": "Alice",
+                "last_name": "Gatsi",
+                "password": "temporary123"
+            },
+            "stand_numb": "a20",
+            "phone": "+263771000015",
+            "monthly_fee": "120.00",
+            "current_balance": "-360.00",
+            "last_payment_date": "2024-11-11",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "farai.ndlovu",
+                "email": "farai.ndlovu@email.com",
+                "first_name": "Farai",
+                "last_name": "Ndlovu",
+                "password": "temporary123"
+            },
+            "stand_numb": "a21",
+            "phone": "+263771000016",
+            "monthly_fee": "120.00",
+            "current_balance": "120.00",
+            "last_payment_date": "2025-02-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "tatenda.hove",
+                "email": "tatenda.hove@email.com",
+                "first_name": "Tatenda",
+                "last_name": "Hove",
+                "password": "temporary123"
+            },
+            "stand_numb": "a22",
+            "phone": "+263771000017",
+            "monthly_fee": "120.00",
+            "current_balance": "-120.00",
+            "last_payment_date": "2024-12-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "blessing.zinyemba",
+                "email": "blessing.zinyemba@email.com",
+                "first_name": "Blessing",
+                "last_name": "Zinyemba",
+                "password": "temporary123"
+            },
+            "stand_numb": "a23",
+            "phone": "+263771000018",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-01-05",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "precious.mare",
+                "email": "precious.mare@email.com",
+                "first_name": "Precious",
+                "last_name": "Mare",
+                "password": "temporary123"
+            },
+            "stand_numb": "a25",
+            "phone": "+263771000019",
+            "monthly_fee": "120.00",
+            "current_balance": "-240.00",
+            "last_payment_date": "2024-12-10",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "charles.chuma",
+                "email": "charles.chuma@email.com",
+                "first_name": "Charles",
+                "last_name": "Chuma",
+                "password": "temporary123"
+            },
+            "stand_numb": "a26",
+            "phone": "+263771000020",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-02-10",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "linda.chari",
+                "email": "linda.chari@email.com",
+                "first_name": "Linda",
+                "last_name": "Chari",
+                "password": "temporary123"
+            },
+            "stand_numb": "a27",
+            "phone": "+263771000021",
+            "monthly_fee": "120.00",
+            "current_balance": "-120.00",
+            "last_payment_date": "2024-12-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "godfrey.ncube",
+                "email": "godfrey.ncube@email.com",
+                "first_name": "Godfrey",
+                "last_name": "Ncube",
+                "password": "temporary123"
+            },
+            "stand_numb": "a28",
+            "phone": "+263771000022",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-01-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "sarah.bhero",
+                "email": "sarah.bhero@email.com",
+                "first_name": "Sarah",
+                "last_name": "Bhero",
+                "password": "temporary123"
+            },
+            "stand_numb": "a29",
+            "phone": "+263771000023",
+            "monthly_fee": "120.00",
+            "current_balance": "-240.00",
+            "last_payment_date": "2024-12-15",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "james.kwaramba",
+                "email": "james.kwaramba@email.com",
+                "first_name": "James",
+                "last_name": "Kwaramba",
+                "password": "temporary123"
+            },
+            "stand_numb": "a30",
+            "phone": "+263771000024",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-02-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "eunice.zhou",
+                "email": "eunice.zhou@email.com",
+                "first_name": "Eunice",
+                "last_name": "Zhou",
+                "password": "temporary123"
+            },
+            "stand_numb": "a31",
+            "phone": "+263771000025",
+            "monthly_fee": "120.00",
+            "current_balance": "-360.00",
+            "last_payment_date": "2024-11-20",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "kelvin.mutsvairo",
+                "email": "kelvin.mutsvairo@email.com",
+                "first_name": "Kelvin",
+                "last_name": "Mutsvairo",
+                "password": "temporary123"
+            },
+            "stand_numb": "a32",
+            "phone": "+263771000026",
+            "monthly_fee": "120.00",
+            "current_balance": "120.00",
+            "last_payment_date": "2025-02-05",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "rumbidzai.chikafu",
+                "email": "rumbidzai.chikafu@email.com",
+                "first_name": "Rumbidzai",
+                "last_name": "Chikafu",
+                "password": "temporary123"
+            },
+            "stand_numb": "a33",
+            "phone": "+263771000027",
+            "monthly_fee": "120.00",
+            "current_balance": "-120.00",
+            "last_payment_date": "2024-12-10",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "tawanda.moyo",
+                "email": "tawanda.moyo@email.com",
+                "first_name": "Tawanda",
+                "last_name": "Moyo",
+                "password": "temporary123"
+            },
+            "stand_numb": "a34",
+            "phone": "+263771000028",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-01-05",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "sharon.mapfumo",
+                "email": "sharon.mapfumo@email.com",
+                "first_name": "Sharon",
+                "last_name": "Mapfumo",
+                "password": "temporary123"
+            },
+            "stand_numb": "a35",
+            "phone": "+263771000029",
+            "monthly_fee": "120.00",
+            "current_balance": "-240.00",
+            "last_payment_date": "2024-12-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "lawrence.dzingai",
+                "email": "lawrence.dzingai@email.com",
+                "first_name": "Lawrence",
+                "last_name": "Dzingai",
+                "password": "temporary123"
+            },
+            "stand_numb": "a37",
+            "phone": "+263771000030",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-02-01",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "faith.mabika",
+                "email": "faith.mabika@email.com",
+                "first_name": "Faith",
+                "last_name": "Mabika",
+                "password": "temporary123"
+            },
+            "stand_numb": "a38",
+            "phone": "+263771000031",
+            "monthly_fee": "120.00",
+            "current_balance": "-120.00",
+            "last_payment_date": "2024-12-20",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "arnold.murehwa",
+                "email": "arnold.murehwa@email.com",
+                "first_name": "Arnold",
+                "last_name": "Murehwa",
+                "password": "temporary123"
+            },
+            "stand_numb": "a40",
+            "phone": "+263771000032",
+            "monthly_fee": "120.00",
+            "current_balance": "120.00",
+            "last_payment_date": "2025-02-10",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "esther.chisango",
+                "email": "esther.chisango@email.com",
+                "first_name": "Esther",
+                "last_name": "Chisango",
+                "password": "temporary123"
+            },
+            "stand_numb": "a41",
+            "phone": "+263771000033",
+            "monthly_fee": "120.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2025-01-15",
+            "account_status": "active"
+        },
+        {
+            "user": {
+                "username": "collins.gutu",
+                "email": "collins.gutu@email.com",
+                "first_name": "Collins",
+                "last_name": "Gutu",
+                "password": "temporary123"
+            },
+            "stand_numb": "b1",
+            "phone": "+263771000034",
+            "monthly_fee": "100.00",
+            "current_balance": "-200.00",
+            "last_payment_date": "2024-11-01",
+            "account_status": "inactive"
+        },
+        {
+            "user": {
+                "username": "priscilla.mhlanga",
+                "email": "priscilla.mhlanga@email.com",
+                "first_name": "Priscilla",
+                "last_name": "Mhlanga",
+                "password": "temporary123"
+            },
+            "stand_numb": "b3",
+            "phone": "+263771000035",
+            "monthly_fee": "100.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2024-12-01",
+            "account_status": "inactive"
+        },
+        {
+            "user": {
+                "username": "henry.chidavaenzi",
+                "email": "henry.chidavaenzi@email.com",
+                "first_name": "Henry",
+                "last_name": "Chidavaenzi",
+                "password": "temporary123"
+            },
+            "stand_numb": "b7L",
+            "phone": "+263771000036",
+            "monthly_fee": "100.00",
+            "current_balance": "-100.00",
+            "last_payment_date": "2024-10-01",
+            "account_status": "inactive"
+        },
+        {
+            "user": {
+                "username": "joyce.banda",
+                "email": "joyce.banda@email.com",
+                "first_name": "Joyce",
+                "last_name": "Banda",
+                "password": "temporary123"
+            },
+            "stand_numb": "b23",
+            "phone": "+263771000037",
+            "monthly_fee": "100.00",
+            "current_balance": "-300.00",
+            "last_payment_date": "2024-09-01",
+            "account_status": "inactive"
+        },
+        {
+            "user": {
+                "username": "patrick.nyoni",
+                "email": "patrick.nyoni@email.com",
+                "first_name": "Patrick",
+                "last_name": "Nyoni",
+                "password": "temporary123"
+            },
+            "stand_numb": "b49",
+            "phone": "+263771000038",
+            "monthly_fee": "100.00",
+            "current_balance": "0.00",
+            "last_payment_date": "2024-12-01",
+            "account_status": "inactive"
+        },
+        {
+            "user": {
+                "username": "miriam.zhou",
+                "email": "miriam.zhou@email.com",
+                "first_name": "Miriam",
+                "last_name": "Zhou",
+                "password": "temporary123"
+            },
+            "stand_numb": "b55",
+            "phone": "+263771000039",
+            "monthly_fee": "100.00",
+            "current_balance": "-200.00",
+            "last_payment_date": "2024-11-15",
+            "account_status": "inactive"
+        }
+    ]
+}

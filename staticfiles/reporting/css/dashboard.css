@@ -151,7 +151,7 @@ button.btn:hover {
 /* Responsive tweaks */
 @media (max-width: 768px) {
     #map {
-        height: 250px;
+        height: 150px;
     }
 
     #imagePreview {

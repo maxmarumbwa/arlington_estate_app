@@ -22,13 +22,12 @@
     <link rel="stylesheet" href="{% static 'reporting/css/report_form.css' %}">
     <link rel="stylesheet" href="{% static 'reporting/css/navbar.css' %}">
     {% block extra_css %}{% endblock %}
-
 </head>
 <body>
 
 {% include "partials/navbar_global.html" %}
 
-<div class="container mt-4">
+<div class="container-fluid px-3 mt-4">
     {% block content %}{% endblock %}
 </div>
 

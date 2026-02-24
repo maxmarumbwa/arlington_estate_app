@@ -1,0 +1,51 @@
+{% extends "admin/gis/openlayers.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+<script>
+    // Remove default OpenLayers layers
+    map.getLayers().clear();
+
+    // ===============================
+    // Base Map Layers (toggle example)
+    // ===============================
+    var osmLayer = new ol.layer.Tile({
+        title: 'OSM Streets',
+        type: 'base',
+        visible: true,
+        source: new ol.source.OSM()
+    });
+
+    var esriSatLayer = new ol.layer.Tile({
+        title: 'Esri Satellite',
+        type: 'base',
+        visible: false,
+        source: new ol.source.XYZ({
+            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+        })
+    });
+
+    // Add layers to map
+    map.addLayer(osmLayer);
+    map.addLayer(esriSatLayer);
+
+    // ===============================
+    // Layer Switcher Control
+    // ===============================
+    var layerSwitcher = new ol.control.LayerSwitcher({
+        tipLabel: 'Layers' // Optional label
+    });
+    map.addControl(layerSwitcher);
+
+    // ===============================
+    // Set default center and zoom
+    // ===============================
+    map.getView().setCenter(ol.proj.fromLonLat([{{ default_lon }}, {{ default_lat }}]));
+    map.getView().setZoom({{ default_zoom }});
+
+</script>
+
+<!-- LayerSwitcher JS + CSS (open-source) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol-layerswitcher/3.6.0/ol-layerswitcher.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ol-layerswitcher/3.6.0/ol-layerswitcher.min.js"></script>
+{% endblock %}

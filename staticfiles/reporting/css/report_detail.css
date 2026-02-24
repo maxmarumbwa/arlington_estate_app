@@ -2,7 +2,7 @@
 
 /* General container */
 .container {
-    max-width: 1000px;
+    max-width: 100px;
     margin: 0 auto;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 20px;

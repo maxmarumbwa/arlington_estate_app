@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Welcome {{ resident.user.first_name }}</h2>
+    <hr>
+
+    <div class="card p-4">
+        <h4>Stand: {{ resident.stand.stand_numb }}</h4>
+        <p><strong>Monthly Fee:</strong> ${{ resident.monthly_fee }}</p>
+        <p><strong>Current Balance:</strong>
+            {% if resident.current_balance < 0 %}
+                <span class="text-danger">${{ resident.current_balance }}</span>
+            {% else %}
+                <span class="text-success">${{ resident.current_balance }}</span>
+            {% endif %}
+        </p>
+        <p><strong>Last Payment:</strong> {{ resident.last_payment_date }}</p>
+
+        <a href="{% url 'statement' %}" class="btn btn-primary">
+            View Statement
+        </a>
+    </div>
+</div>
+{% endblock %}

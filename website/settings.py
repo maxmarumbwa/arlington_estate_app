@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "broad-durable-breakdown-prize.trycloudflare.com",
+    "species-copyrights-spirituality-achieved.trycloudflare.com",
 ]
 
 # Get the current host from environment or request
@@ -57,12 +57,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",  #
     "dashboard",
     "reporting",
     "amenities",
     "security",
     "communication",
     "payments",
+    "accounts",
     "directory",
     "crispy_forms",
     "crispy_bootstrap5",
@@ -109,7 +111,7 @@ WSGI_APPLICATION = "website.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": config("DATABASE_NAME"),
         "USER": config("DATABASE_USER"),
         "PASSWORD": config("DATABASE_PASSWORD"),
